@@ -10,9 +10,9 @@ boost_asio_http
 
 - The *boost_asio_http* library provides embedded HTTP server in your application.
 - The features of this library are:
- - Simply include one header file for easy integration into your application.
- - Easily host Web API from your application.
- - Can expect the memory consumption of the HTTP server function to be low.
+	- Simply include one header file for easy integration into your application.
+	- Easily host Web API from your application.
+	- Can expect the memory consumption of the HTTP server function to be low.
 
 - There are several ways to embed HTTP server in your application, but the *boost_asio_http* provides the easiest way; just including the one header file.
 
@@ -32,13 +32,13 @@ This *boost_asio_http* has no data-size limitation during processing request / r
 ## Requirement
 
 - Boost (https://www.boost.org/)
- - development and test are done with boost 1.77.0 and VisualStudio2022, but other versions of boost and other development environments should work as well.
+development and test are done with boost 1.77.0 and VisualStudio2022, but other versions of boost and other development environments should work as well.
 
 ## Examples
 
 - Working examples are in examples folder and tests folder.
 
-#### Hosting files
+### Hosting files
 ````
 #include "boost_asio_http_server.hpp"
 
@@ -57,7 +57,7 @@ int main()
 
 ````
 
-#### Providing Web API
+### Providing Web API
 ````
 #include "boost_asio_http_server.hpp"
 
@@ -85,7 +85,7 @@ int main()
 - tests/TestHandlerFuncs.cpp are also showing examples how to implement Web API handler.
 
 
-#### Run the HTTP server in thread.
+### Run the HTTP server in thread.
 - See tests/main.cpp
 
 ````
@@ -115,14 +115,14 @@ private:
 ## Future Work
 
 - Following supports will be required:
- - TLS
- - authentication
-etc.
+	- TLS
+	- authentication
+	- etc.
 
 ## Author
 
 - HIROSE,Motohito
- - Developer regarding simulation software.
+	- Developer regarding simulation software
 
 ## License
 
