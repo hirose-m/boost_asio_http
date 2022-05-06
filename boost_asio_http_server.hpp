@@ -76,7 +76,7 @@ protected:
             boost::asio::async_write(socket_, boost::asio::buffer(pbase(), std::distance(pbase(), pptr())), yield_[ec]);
             if (ec) return -1;
 
-            pbump(pbase() - pptr());
+            pbump(static_cast<int>(pbase() - pptr()));
         }
         return 0;
     }
