@@ -477,7 +477,7 @@ public:
     server& operator=(const server&) = delete;
 
     explicit server(const std::string& address, const std::string& port, const std::string& docRoot)
-        : ioContext_(1), acceptor_(ioContext_), docRoot_(docRoot), isAcceptorOpened_(false)
+        : ioContext_(1), acceptor_(ioContext_), docRoot_(docRoot), acceptorOpened_(false)
     {
         boost::asio::ip::tcp::resolver resolver(ioContext_);
         boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(address, port).begin();
@@ -485,7 +485,7 @@ public:
         acceptor_.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
         acceptor_.bind(endpoint);
         acceptor_.listen();
-        isAcceptorOpened_ = true;
+        acceptorOpened_ = true;
 
         do_accept();
     }
@@ -494,7 +494,7 @@ public:
 
     void stop()
     {
-        isAcceptorOpened_ = false;
+        acceptorOpened_ = false;
         acceptor_.close();
         connectionManager_.stop_all();
     }
@@ -508,7 +508,7 @@ private:
     void do_accept()
     {
         acceptor_.async_accept([this](boost::system::error_code ec, boost::asio::ip::tcp::socket socket) {
-            if (!isAcceptorOpened_ || !acceptor_.is_open()) return;
+            if (!acceptorOpened_ || !acceptor_.is_open()) return;
 
             if (!ec) {
                 connectionManager_.start(std::make_shared<detail::connection>(ioContext_, std::move(socket), connectionManager_, docRoot_, handlerTable_));
@@ -519,7 +519,7 @@ private:
 
     boost::asio::io_context ioContext_;
     boost::asio::ip::tcp::acceptor acceptor_;
-    bool isAcceptorOpened_;
+    bool acceptorOpened_;
 
     detail::connection_manager connectionManager_;
     std::string docRoot_;
