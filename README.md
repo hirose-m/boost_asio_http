@@ -32,7 +32,7 @@ This *boost_asio_http* has no data-size limitation during processing request / r
 ## Requirement
 
 - Boost (https://www.boost.org/)
-development and test are done with boost 1.77.0 and VisualStudio2022, but other versions of boost and other development environments should work as well.
+	- development and test are done with boost 1.77.0 and VisualStudio2022, but other versions of boost and other development environments should work as well.
 
 ## Examples
 
