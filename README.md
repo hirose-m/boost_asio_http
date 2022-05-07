@@ -46,7 +46,7 @@ using namespace boost_asio_http;
 
 int main()
 {
-    server s("localhost", "8080", "./doc");
+    server s("0.0.0.0", "8080", "./doc");
         // By default, GET request can get files from the document root,
         // and PUT request can put files to the document root.
     s.run();
@@ -73,7 +73,7 @@ void greeting(request& rq, response& rs)
 
 int main()
 {
-    boost_asio_http::server s("localhost", "8888", "./doc");
+    boost_asio_http::server s("0.0.0.0", "8888", "./doc");
 
     s.set_get_handler("/Greeging", greeting); // resister handler against the Web API.
 
@@ -95,7 +95,7 @@ public:
 	SetupTestServer()
 	{
 		std::cout << "starting server..." << std::endl;
-		server_ = std::make_shared<boost_asio_http::server>("localhost", "8080", "./doc");
+		server_ = std::make_shared<boost_asio_http::server>("0.0.0.0", "8080", "./doc");
 
 		thread_ = std::make_shared<std::thread>(&boost_asio_http::server::run, server_.get());
 	}

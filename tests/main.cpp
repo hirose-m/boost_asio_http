@@ -17,7 +17,7 @@ public:
 	SetupTestServer()
 	{
 		std::cout << "starting server..." << std::endl;
-		server_ = std::make_shared<boost_asio_http::server>("localhost", "8080", "./doc");
+		server_ = std::make_shared<boost_asio_http::server>("0.0.0.0", "8080", "./doc");
 
 		server_->set_get_handler("/Hello", hello);
 		server_->set_post_handler("/PostForm", postForm);
