@@ -477,19 +477,23 @@ public:
     server& operator=(const server&) = delete;
 
     explicit server(const std::string& address, const std::string& port, const std::string& docRoot)
-        : ioContext_(1), acceptor_(ioContext_), docRoot_(docRoot), acceptorOpened_(false)
+        : ioContext_(1), acceptor_(ioContext_), docRoot_(docRoot), valid_(false), acceptorOpened_(false)
     {
-        boost::asio::ip::tcp::resolver resolver(ioContext_);
-        boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(address, port).begin();
-        acceptor_.open(endpoint.protocol());
-        acceptor_.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
-        acceptor_.bind(endpoint);
-        acceptor_.listen();
-        acceptorOpened_ = true;
+		try {
+			boost::asio::ip::tcp::resolver resolver(ioContext_);
+			boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(address, port).begin();
+			acceptor_.open(endpoint.protocol());
+			acceptor_.bind(endpoint);
+			acceptor_.listen();
+			acceptorOpened_ = true;
 
-        do_accept();
+			do_accept();
+			valid_ = true;
+		} catch (const boost::system::system_error& ec) {
+		}
     }
 
+    bool is_valid() const { return valid_; }
     void run() { ioContext_.run(); }
 
     void stop()
@@ -519,6 +523,7 @@ private:
 
     boost::asio::io_context ioContext_;
     boost::asio::ip::tcp::acceptor acceptor_;
+    bool valid_;
     bool acceptorOpened_;
 
     detail::connection_manager connectionManager_;
