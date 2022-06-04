@@ -319,7 +319,7 @@ private:
     friend class detail::connection;
 
     response(detail::socket_streambuf* sb)
-        : os_(sb), code_(ok), headerWritten_(false), contentType_("text/html"), contentLength_(detail::uninitialized_content_length)
+        : os_(sb), code_(ok), headerWritten_(false), contentType_("text/html"), contentLength_(detail::uninitialized_content_length), closed_(false)
     {
     }
     void flush_header()
@@ -350,6 +350,7 @@ public:
 
         flush_header();
         os_.flush();
+        closed_ = true;
     }
 
     void set_code(code code) { code_ = code; }
