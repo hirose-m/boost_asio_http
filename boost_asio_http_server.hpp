@@ -66,7 +66,8 @@ protected:
             }
             setg(inBuffer_.data(), inBuffer_.data(), inBuffer_.data() + n);
         }
-        return *gptr();
+
+        return static_cast<unsigned char>(*gptr());
     }
 
     int sync()
